@@ -871,15 +871,15 @@ if (MSVC)
   # For Release builds, we shall dynamically link into uCRT [ucrtbase.dll] (which is pushed down as a Windows Update on downlevel OS) but
   # wont do the same for debug/checked builds since ucrtbased.dll is not redistributable and Debug/Checked builds are not
   # production-time scenarios.
-  set(CMAKE_MSVC_RUNTIME_LIBRARY MultiThreaded$<$<AND:$<OR:$<CONFIG:Debug>,$<CONFIG:Checked>>,$<NOT:$<BOOL:$<TARGET_PROPERTY:DAC_COMPONENT>>>>:Debug>)
+  set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
   if (NOT CLR_CMAKE_ENABLE_SANITIZERS)
     # Force uCRT to be dynamically linked for Release build
     # We won't do this for sanitized builds as the dynamic CRT is not compatible with the static sanitizer runtime and
     # the dynamic sanitizer runtime is not redistributable. Sanitized runtime builds are not production-time scenarios
     # so we don't get the benefits of a dynamic CRT for sanitized runtime builds.
-    add_linker_flag(/NODEFAULTLIB:libucrt.lib RELEASE)
-    add_linker_flag(/DEFAULTLIB:ucrt.lib RELEASE)
+    #add_linker_flag(/NODEFAULTLIB:libucrt.lib RELEASE)
+    #add_linker_flag(/DEFAULTLIB:ucrt.lib RELEASE)
   endif()
 
   add_compile_options($<$<COMPILE_LANGUAGE:ASM_MASM>:/ZH:SHA_256>)

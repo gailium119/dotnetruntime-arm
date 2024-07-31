@@ -9,7 +9,7 @@ include(${CLR_ENG_NATIVE_DIR}/configurecompiler.cmake)
 if (MSVC)
     # Host components don't try to handle asynchronous exceptions
     add_compile_options($<$<COMPILE_LANGUAGE:CXX>:/EHsc>)
-
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     # Explicitly re-enable warnings about declaration hiding (currently disabled by configurecompiler.cmake)
     add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:/we4456>) # declaration of 'identifier' hides previous local declaration
     add_compile_options($<$<COMPILE_LANGUAGE:C,CXX>:/we4457>) # declaration of 'identifier' hides function parameter

@@ -20,6 +20,9 @@
     <OfficialBuildRID Include="win-arm64">
       <Platform>arm64</Platform>
     </OfficialBuildRID>
+    <OfficialBuildRID Include="win-arm">
+      <Platform>arm</Platform>
+    </OfficialBuildRID>
     <OfficialBuildRID Include="linux-arm">
       <Platform>arm</Platform>
     </OfficialBuildRID>

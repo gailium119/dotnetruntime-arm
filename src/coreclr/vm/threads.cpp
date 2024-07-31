@@ -2696,7 +2696,7 @@ void Thread::BaseCoUninitialize()
     ::CoUninitialize();
 }// BaseCoUninitialize
 
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
 void Thread::BaseWinRTUninitialize()
 {
     STATIC_CONTRACT_THROWS;
@@ -2722,7 +2722,7 @@ void Thread::CoUninitialize()
     // Running threads might have performed a CoInitialize which must
     // now be balanced.
     BOOL needsUninitialize = IsCoInitialized()
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
         || IsWinRTInitialized()
 #endif // FEATURE_COMINTEROP
         ;
@@ -2738,7 +2738,7 @@ void Thread::CoUninitialize()
             ResetThreadState(TS_CoInitialized);
         }
 
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
         if (IsWinRTInitialized())
         {
             _ASSERTE(WinRTSupported());
@@ -2862,7 +2862,7 @@ void Thread::CleanupCOMState()
     // call CoUninitialize.
 
     BOOL needsUninitialize = IsCoInitialized()
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
         || IsWinRTInitialized()
 #endif // FEATURE_COMINTEROP
         ;
@@ -2878,7 +2878,7 @@ void Thread::CleanupCOMState()
             ResetCoInitialized();
         }
 
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
         if (IsWinRTInitialized())
         {
             _ASSERTE(WinRTSupported());
@@ -4913,7 +4913,7 @@ Thread::ApartmentState Thread::SetApartment(ApartmentState state)
     if (state == AS_Unknown)
     {
         BOOL needUninitialize = (m_State & TS_CoInitialized)
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
             || IsWinRTInitialized()
 #endif // FEATURE_COMINTEROP
             ;
@@ -4940,7 +4940,7 @@ Thread::ApartmentState Thread::SetApartment(ApartmentState state)
                 ResetThreadState(uninitialized);
             }
 
-#ifdef FEATURE_COMINTEROP
+#ifdef _WINRT_SUPPORT
             if (IsWinRTInitialized())
             {
                 _ASSERTE(WinRTSupported());
@@ -5050,7 +5050,7 @@ Thread::ApartmentState Thread::SetApartment(ApartmentState state)
     {
         _ASSERTE(!"Unexpected HRESULT returned from CoInitializeEx!");
     }
-
+#ifdef _WINRT_SUPPORT
     // If WinRT is supported on this OS, also initialize it at the same time.  Since WinRT sits on top of COM
     // we need to make sure that it is initialized in the same threading mode as we just started COM itself
     // with (or that we detected COM had already been started with).
@@ -5091,7 +5091,7 @@ Thread::ApartmentState Thread::SetApartment(ApartmentState state)
             _ASSERTE(!"Unexpected HRESULT From RoInitialize");
         }
     }
-
+#endif
     // Since we've just called CoInitialize, COM has effectively been started up.
     // To ensure the CLR is aware of this, we need to call EnsureComStarted.
     EnsureComStarted(FALSE);

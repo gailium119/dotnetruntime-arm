@@ -3,14 +3,14 @@
     <AssemblyName>R2RDump</AssemblyName>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <Platforms>x64;x86;arm64;arm;loongarch64</Platforms>
     <AssemblyKey>Open</AssemblyKey>
     <IsDotNetFrameworkProductAssembly>true</IsDotNetFrameworkProductAssembly>
     <TargetFramework>$(NetCoreAppToolCurrent)</TargetFramework>
     <CLSCompliant>false</CLSCompliant>
     <NoWarn>8002,NU1701</NoWarn>
-    <RuntimeIdentifiers>win-x64;win-x86</RuntimeIdentifiers>
+    <!--RuntimeIdentifiers>win-x64;win-x86;win-arm</RuntimeIdentifiers-->
     <OutputPath>$(RuntimeBinDir)/R2RDump</OutputPath>
     <RunAnalyzers>false</RunAnalyzers>
   </PropertyGroup>
