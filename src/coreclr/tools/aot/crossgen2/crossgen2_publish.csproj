@@ -25,6 +25,8 @@
     <PublishReadyToRunComposite>true</PublishReadyToRunComposite>
   </PropertyGroup>
 
+  <Import Condition="'$(TargetArchitecture)' != 'arm'" Project="Sdk.targets" Sdk="Microsoft.NET.Sdk" />
+
   <ItemGroup>
     <KnownFrameworkReference Remove="Microsoft.AspNetCore.App" />
     <KnownFrameworkReference Remove="Microsoft.WindowsDesktop.App" />
